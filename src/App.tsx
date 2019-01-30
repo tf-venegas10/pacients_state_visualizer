@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
 import './App.css';
+import NewPacient from './Components/NewPacient';
+import PacientHome from './Components/PacientHome';
+import Search from './Components/Search';
+import { Link, NavBarGlobal } from './StyledComponents/index';
 import AWSAppSyncClient from 'aws-appsync';
 import { Rehydrated } from 'aws-appsync-react';
 import awsmobile from './aws-exports';
@@ -15,14 +19,15 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
+          <NavBarGlobal>
+            <Link to="/">Buscar</Link>
+            <Link to="/nuevo/paciente">Nuevo paciente</Link>
+            <Link to="/paciente">Paciente #123</Link>
+          </NavBarGlobal>
         </header>
+        <Route exact path="/" component={Search} />
+        <Route path="/paciente" component={PacientHome} />
+        <Route path="/nuevo/paciente" component={NewPacient} />
       </div>
     );
   }
