@@ -1,0 +1,15 @@
+{
+    "AppSyncApiName": "pacientstateapi",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authcognito7fe7759c",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "ElasticSearchStreamingLambdaCodeS3Key": "amplify-appsync-files/python_streaming_function.zip",
+    "ElasticSearchStreamingLambdaCodeS3Bucket": "pacientsateack-20190130085957-deployment",
+    "schemaGraphql": "s3://pacientsateack-20190130085957-deployment/amplify-appsync-files/schema.graphql.1548858789130",
+    "ResolverBucket": "pacientsateack-20190130085957-deployment",
+    "ResolverRootKey": "amplify-appsync-files",
+    "DeploymentTimestamp": "1548858789130"
+}

@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import AWSAppSyncClient from 'aws-appsync';
+import { Rehydrated } from 'aws-appsync-react';
+import awsmobile from './aws-exports';
+import Amplify, { Auth } from 'aws-amplify';
+import { ApolloProvider } from 'react-apollo';
+import { withAuthenticator } from 'aws-amplify-react';
+
+Amplify.configure(awsmobile);
 
 class App extends Component {
   render() {
@@ -11,12 +19,7 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
             Learn React
           </a>
         </header>
@@ -25,4 +28,21 @@ class App extends Component {
   }
 }
 
-export default App;
+const client = new AWSAppSyncClient({
+  url: awsmobile.aws_appsync_graphqlEndpoint,
+  region: awsmobile.aws_appsync_region,
+  auth: {
+    type: awsmobile.aws_appsync_authenticationType,
+    jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken()
+  }
+});
+
+const withProvider = () => (
+  <ApolloProvider client={client}>
+    <Rehydrated>
+      <App />
+    </Rehydrated>
+  </ApolloProvider>
+);
+
+export default withAuthenticator(withProvider);

@@ -1,0 +1,16 @@
+projects:
+  pacientstateapi:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+        graphQLApiId: rypawoujlvbnxgkup723pu6dcy
+      endpoints:
+        prod: >-
+          https://36oqk6agefhonjpco4znmb5fce.appsync-api.us-east-2.amazonaws.com/graphql

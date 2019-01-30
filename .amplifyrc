@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "pacientsateack-20190130085957-authRole",
+            "UnauthRoleArn": "arn:aws:iam::006655026955:role/pacientsateack-20190130085957-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::006655026955:role/pacientsateack-20190130085957-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "pacientsateack-20190130085957-deployment",
+            "UnauthRoleName": "pacientsateack-20190130085957-unauthRole",
+            "StackName": "pacientsateack-20190130085957",
+            "StackId": "arn:aws:cloudformation:us-east-2:006655026955:stack/pacientsateack-20190130085957/5452e090-2497-11e9-91b6-020cf0d94894"
+        }
+    }
+}

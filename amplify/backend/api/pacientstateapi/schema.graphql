@@ -1,0 +1,46 @@
+type Paciente @model @searchable {
+  id: ID!
+  nombre: String!
+  fechaNacimiento: String!
+  tipoDocumento: String!
+  documento: String!
+  planSalud: String
+  numeroAfiliado: String
+  genero: String!
+  historia: Historia @connection(name:"HistoriaPaciente")
+}
+type Historia @model{
+  id: ID!
+  paciente: Paciente @connection(name:"HistoriaPaciente")
+  consultas: [Consulta] @connection(name: "HistoriaConsultas")
+}
+type Consulta @model{
+  id: ID!
+  entradaHistoria: String!
+  historia: Historia @connection(name: "HistoriaConsultas")
+  diagnosticos: [Diagnostico] @connection(name: "ConsultaDiagnosticos")
+  tratmientos: [Tratamiento] @connection(name: "ConsultaTratamientos")
+  hospitalizacion: Hospitalizacion @connection(name: "ConsultaHospitalzacion")
+}
+
+type Diagnostico @model{
+  id: ID!
+  nombre: String!
+  descripcion: String
+  consulta: Consulta @connection(name: "ConsultaDiagnosticos")
+}
+type Tratamiento @model {
+  id: ID!
+  medicamento: String!
+  dosis: String!
+  numeroDias: Int!
+  consulta: Consulta @connection(name: "ConsultaTratamientos")
+}
+type Hospitalizacion @model {
+  id: ID!
+  sucedio: Boolean!
+  numeroDias: Int
+  interrupcion: Boolean
+  estado: String
+  consulta: Consulta @connection(name: "ConsultaHospitalzacion")
+}

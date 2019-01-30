@@ -1,0 +1,466 @@
+type Paciente {
+  id: ID!
+  nombre: String!
+  fechaNacimiento: String!
+  tipoDocumento: String!
+  documento: String!
+  planSalud: String
+  numeroAfiliado: String
+  genero: String!
+  historia: Historia
+}
+
+type Historia {
+  id: ID!
+  paciente: Paciente
+  consultas(filter: ModelConsultaFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelConsultaConnection
+}
+
+type Consulta {
+  id: ID!
+  entradaHistoria: String!
+  historia: Historia
+  diagnosticos(filter: ModelDiagnosticoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelDiagnosticoConnection
+  tratmientos(filter: ModelTratamientoFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelTratamientoConnection
+  hospitalizacion: Hospitalizacion
+}
+
+type Diagnostico {
+  id: ID!
+  nombre: String!
+  descripcion: String
+  consulta: Consulta
+}
+
+type Tratamiento {
+  id: ID!
+  medicamento: String!
+  dosis: String!
+  numeroDias: Int!
+  consulta: Consulta
+}
+
+type Hospitalizacion {
+  id: ID!
+  sucedio: Boolean!
+  numeroDias: Int
+  interrupcion: Boolean
+  estado: String
+  consulta: Consulta
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelPacienteConnection {
+  items: [Paciente]
+  nextToken: String
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelIntFilterInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  contains: Int
+  notContains: Int
+  between: [Int]
+}
+
+input ModelFloatFilterInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  contains: Float
+  notContains: Float
+  between: [Float]
+}
+
+input ModelBooleanFilterInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelPacienteFilterInput {
+  id: ModelIDFilterInput
+  nombre: ModelStringFilterInput
+  fechaNacimiento: ModelStringFilterInput
+  tipoDocumento: ModelStringFilterInput
+  documento: ModelStringFilterInput
+  planSalud: ModelStringFilterInput
+  numeroAfiliado: ModelStringFilterInput
+  genero: ModelStringFilterInput
+  and: [ModelPacienteFilterInput]
+  or: [ModelPacienteFilterInput]
+  not: ModelPacienteFilterInput
+}
+
+type Query {
+  getPaciente(id: ID!): Paciente
+  listPacientes(filter: ModelPacienteFilterInput, limit: Int, nextToken: String): ModelPacienteConnection
+  getHistoria(id: ID!): Historia
+  listHistorias(filter: ModelHistoriaFilterInput, limit: Int, nextToken: String): ModelHistoriaConnection
+  getConsulta(id: ID!): Consulta
+  listConsultas(filter: ModelConsultaFilterInput, limit: Int, nextToken: String): ModelConsultaConnection
+  getDiagnostico(id: ID!): Diagnostico
+  listDiagnosticos(filter: ModelDiagnosticoFilterInput, limit: Int, nextToken: String): ModelDiagnosticoConnection
+  getTratamiento(id: ID!): Tratamiento
+  listTratamientos(filter: ModelTratamientoFilterInput, limit: Int, nextToken: String): ModelTratamientoConnection
+  getHospitalizacion(id: ID!): Hospitalizacion
+  listHospitalizacions(filter: ModelHospitalizacionFilterInput, limit: Int, nextToken: String): ModelHospitalizacionConnection
+  searchPacientes(filter: SearchablePacienteFilterInput, sort: SearchablePacienteSortInput, limit: Int, nextToken: Int): SearchablePacienteConnection
+}
+
+input CreatePacienteInput {
+  id: ID
+  nombre: String!
+  fechaNacimiento: String!
+  tipoDocumento: String!
+  documento: String!
+  planSalud: String
+  numeroAfiliado: String
+  genero: String!
+  pacienteHistoriaId: ID
+}
+
+input UpdatePacienteInput {
+  id: ID!
+  nombre: String
+  fechaNacimiento: String
+  tipoDocumento: String
+  documento: String
+  planSalud: String
+  numeroAfiliado: String
+  genero: String
+  pacienteHistoriaId: ID
+}
+
+input DeletePacienteInput {
+  id: ID
+}
+
+type Mutation {
+  createPaciente(input: CreatePacienteInput!): Paciente
+  updatePaciente(input: UpdatePacienteInput!): Paciente
+  deletePaciente(input: DeletePacienteInput!): Paciente
+  createHistoria(input: CreateHistoriaInput!): Historia
+  updateHistoria(input: UpdateHistoriaInput!): Historia
+  deleteHistoria(input: DeleteHistoriaInput!): Historia
+  createConsulta(input: CreateConsultaInput!): Consulta
+  updateConsulta(input: UpdateConsultaInput!): Consulta
+  deleteConsulta(input: DeleteConsultaInput!): Consulta
+  createDiagnostico(input: CreateDiagnosticoInput!): Diagnostico
+  updateDiagnostico(input: UpdateDiagnosticoInput!): Diagnostico
+  deleteDiagnostico(input: DeleteDiagnosticoInput!): Diagnostico
+  createTratamiento(input: CreateTratamientoInput!): Tratamiento
+  updateTratamiento(input: UpdateTratamientoInput!): Tratamiento
+  deleteTratamiento(input: DeleteTratamientoInput!): Tratamiento
+  createHospitalizacion(input: CreateHospitalizacionInput!): Hospitalizacion
+  updateHospitalizacion(input: UpdateHospitalizacionInput!): Hospitalizacion
+  deleteHospitalizacion(input: DeleteHospitalizacionInput!): Hospitalizacion
+}
+
+type Subscription {
+  onCreatePaciente: Paciente @aws_subscribe(mutations: ["createPaciente"])
+  onUpdatePaciente: Paciente @aws_subscribe(mutations: ["updatePaciente"])
+  onDeletePaciente: Paciente @aws_subscribe(mutations: ["deletePaciente"])
+  onCreateHistoria: Historia @aws_subscribe(mutations: ["createHistoria"])
+  onUpdateHistoria: Historia @aws_subscribe(mutations: ["updateHistoria"])
+  onDeleteHistoria: Historia @aws_subscribe(mutations: ["deleteHistoria"])
+  onCreateConsulta: Consulta @aws_subscribe(mutations: ["createConsulta"])
+  onUpdateConsulta: Consulta @aws_subscribe(mutations: ["updateConsulta"])
+  onDeleteConsulta: Consulta @aws_subscribe(mutations: ["deleteConsulta"])
+  onCreateDiagnostico: Diagnostico @aws_subscribe(mutations: ["createDiagnostico"])
+  onUpdateDiagnostico: Diagnostico @aws_subscribe(mutations: ["updateDiagnostico"])
+  onDeleteDiagnostico: Diagnostico @aws_subscribe(mutations: ["deleteDiagnostico"])
+  onCreateTratamiento: Tratamiento @aws_subscribe(mutations: ["createTratamiento"])
+  onUpdateTratamiento: Tratamiento @aws_subscribe(mutations: ["updateTratamiento"])
+  onDeleteTratamiento: Tratamiento @aws_subscribe(mutations: ["deleteTratamiento"])
+  onCreateHospitalizacion: Hospitalizacion @aws_subscribe(mutations: ["createHospitalizacion"])
+  onUpdateHospitalizacion: Hospitalizacion @aws_subscribe(mutations: ["updateHospitalizacion"])
+  onDeleteHospitalizacion: Hospitalizacion @aws_subscribe(mutations: ["deleteHospitalizacion"])
+}
+
+type ModelHistoriaConnection {
+  items: [Historia]
+  nextToken: String
+}
+
+input ModelHistoriaFilterInput {
+  id: ModelIDFilterInput
+  and: [ModelHistoriaFilterInput]
+  or: [ModelHistoriaFilterInput]
+  not: ModelHistoriaFilterInput
+}
+
+input CreateHistoriaInput {
+  id: ID
+  historiaPacienteId: ID
+}
+
+input UpdateHistoriaInput {
+  id: ID!
+  historiaPacienteId: ID
+}
+
+input DeleteHistoriaInput {
+  id: ID
+}
+
+type ModelConsultaConnection {
+  items: [Consulta]
+  nextToken: String
+}
+
+input ModelConsultaFilterInput {
+  id: ModelIDFilterInput
+  entradaHistoria: ModelStringFilterInput
+  and: [ModelConsultaFilterInput]
+  or: [ModelConsultaFilterInput]
+  not: ModelConsultaFilterInput
+}
+
+input CreateConsultaInput {
+  id: ID
+  entradaHistoria: String!
+  consultaHistoriaId: ID
+  consultaHospitalizacionId: ID
+}
+
+input UpdateConsultaInput {
+  id: ID!
+  entradaHistoria: String
+  consultaHistoriaId: ID
+  consultaHospitalizacionId: ID
+}
+
+input DeleteConsultaInput {
+  id: ID
+}
+
+type ModelDiagnosticoConnection {
+  items: [Diagnostico]
+  nextToken: String
+}
+
+input ModelDiagnosticoFilterInput {
+  id: ModelIDFilterInput
+  nombre: ModelStringFilterInput
+  descripcion: ModelStringFilterInput
+  and: [ModelDiagnosticoFilterInput]
+  or: [ModelDiagnosticoFilterInput]
+  not: ModelDiagnosticoFilterInput
+}
+
+input CreateDiagnosticoInput {
+  id: ID
+  nombre: String!
+  descripcion: String
+  diagnosticoConsultaId: ID
+}
+
+input UpdateDiagnosticoInput {
+  id: ID!
+  nombre: String
+  descripcion: String
+  diagnosticoConsultaId: ID
+}
+
+input DeleteDiagnosticoInput {
+  id: ID
+}
+
+type ModelTratamientoConnection {
+  items: [Tratamiento]
+  nextToken: String
+}
+
+input ModelTratamientoFilterInput {
+  id: ModelIDFilterInput
+  medicamento: ModelStringFilterInput
+  dosis: ModelStringFilterInput
+  numeroDias: ModelIntFilterInput
+  and: [ModelTratamientoFilterInput]
+  or: [ModelTratamientoFilterInput]
+  not: ModelTratamientoFilterInput
+}
+
+input CreateTratamientoInput {
+  id: ID
+  medicamento: String!
+  dosis: String!
+  numeroDias: Int!
+  tratamientoConsultaId: ID
+}
+
+input UpdateTratamientoInput {
+  id: ID!
+  medicamento: String
+  dosis: String
+  numeroDias: Int
+  tratamientoConsultaId: ID
+}
+
+input DeleteTratamientoInput {
+  id: ID
+}
+
+type ModelHospitalizacionConnection {
+  items: [Hospitalizacion]
+  nextToken: String
+}
+
+input ModelHospitalizacionFilterInput {
+  id: ModelIDFilterInput
+  sucedio: ModelBooleanFilterInput
+  numeroDias: ModelIntFilterInput
+  interrupcion: ModelBooleanFilterInput
+  estado: ModelStringFilterInput
+  and: [ModelHospitalizacionFilterInput]
+  or: [ModelHospitalizacionFilterInput]
+  not: ModelHospitalizacionFilterInput
+}
+
+input CreateHospitalizacionInput {
+  id: ID
+  sucedio: Boolean!
+  numeroDias: Int
+  interrupcion: Boolean
+  estado: String
+  hospitalizacionConsultaId: ID
+}
+
+input UpdateHospitalizacionInput {
+  id: ID!
+  sucedio: Boolean
+  numeroDias: Int
+  interrupcion: Boolean
+  estado: String
+  hospitalizacionConsultaId: ID
+}
+
+input DeleteHospitalizacionInput {
+  id: ID
+}
+
+input SearchableStringFilterInput {
+  ne: String
+  eq: String
+  match: String
+  matchPhrase: String
+  matchPhrasePrefix: String
+  multiMatch: String
+  exists: Boolean
+  wildcard: String
+  regexp: String
+}
+
+input SearchableIDFilterInput {
+  ne: ID
+  eq: ID
+  match: ID
+  matchPhrase: ID
+  matchPhrasePrefix: ID
+  multiMatch: ID
+  exists: Boolean
+  wildcard: ID
+  regexp: ID
+}
+
+input SearchableIntFilterInput {
+  ne: Int
+  gt: Int
+  lt: Int
+  gte: Int
+  lte: Int
+  eq: Int
+  range: [Int]
+}
+
+input SearchableFloatFilterInput {
+  ne: Float
+  gt: Float
+  lt: Float
+  gte: Float
+  lte: Float
+  eq: Float
+  range: [Float]
+}
+
+input SearchableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input SearchablePacienteFilterInput {
+  id: SearchableIDFilterInput
+  nombre: SearchableStringFilterInput
+  fechaNacimiento: SearchableStringFilterInput
+  tipoDocumento: SearchableStringFilterInput
+  documento: SearchableStringFilterInput
+  planSalud: SearchableStringFilterInput
+  numeroAfiliado: SearchableStringFilterInput
+  genero: SearchableStringFilterInput
+  and: [SearchablePacienteFilterInput]
+  or: [SearchablePacienteFilterInput]
+  not: SearchablePacienteFilterInput
+}
+
+enum SearchableSortDirection {
+  asc
+  desc
+}
+
+enum SearchablePacienteSortableFields {
+  id
+  nombre
+  fechaNacimiento
+  tipoDocumento
+  documento
+  planSalud
+  numeroAfiliado
+  genero
+}
+
+input SearchablePacienteSortInput {
+  field: SearchablePacienteSortableFields
+  direction: SearchableSortDirection
+}
+
+type SearchablePacienteConnection {
+  items: [Paciente]
+  nextToken: String
+}
