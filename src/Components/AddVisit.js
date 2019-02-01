@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toggleExpansion } from '../ActionCreators/index';
 import { Form, H1, PrimaryButton } from '../StyledComponents/index';
 
-const AddVisit = (props: any) => {
+const AddVisit = (props) => {
   console.log(props);
   return (
     <div>
@@ -29,11 +29,11 @@ AddVisit.propTypes = {
   paciente: propTypes.object.isRequired
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state) => {
   return state;
 };
 
-const mapDispatchToProps = (dispatch: Function) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     toggleExpansion: () => dispatch(toggleExpansion())
   };

@@ -1,6 +1,6 @@
 import React from 'react';
-export default class History extends React.Component<any> {
-  constructor(props: any) {
+export default class History extends React.Component {
+  constructor(props) {
     super(props);
   }
   render() {
