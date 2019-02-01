@@ -2,6 +2,7 @@ import React from 'react';
 import Link from './Link';
 import { Navbar } from 'reactstrap';
 import styled from 'styled-components';
+import { Col } from 'reactstrap';
 const NavBarPaciente = styled(Navbar)`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1.2em;
@@ -12,9 +13,16 @@ const NavBarPaciente = styled(Navbar)`
   margin: 0em;
 `;
 const PacienteNav = (props) => (
-  <NavBarPaciente>
-    <Link to="/paciente/1/add">Agregar visita</Link>
-    <Link to="/paciente/1/historia">Historia del paciente</Link>
+  <NavBarPaciente className="row">
+    <Col sm={3}>
+      <Link to="/paciente">Información del paciente</Link>
+    </Col>
+    <Col sm={3}>
+      <Link to="/paciente/add">Agregar visita</Link>
+    </Col>
+    <Col sm={3}>
+      <Link to="/paciente/historia">Historia del paciente</Link>
+    </Col>
   </NavBarPaciente>
 );
 export default PacienteNav;

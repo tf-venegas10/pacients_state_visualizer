@@ -1,10 +1,5 @@
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
-import * as Navbar from './Navbar';
-
-export const NavBarGlobal = Navbar.NavBarGlobal;
-export const Link = Navbar.LinkStyled;
-export const NavBarPaciente = Navbar.NavBarPaciente;
 
 export const Form = styled.form`
   color: rgb(55, 55, 55);
@@ -16,6 +11,13 @@ export const Form = styled.form`
 export const H1 = styled.h1`
   color: rgb(65, 65, 65);
   font-size: 3 em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 2em;
+  margin: 2 em;
+`;
+export const H3 = styled.h3`
+  color: rgb(65, 65, 65);
+  font-size: 2 em;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding: 2em;
   margin: 2 em;

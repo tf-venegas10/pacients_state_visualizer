@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormGroup, Input } from 'reactstrap';
 import { cambioPacienteProvisional, crearPaciente } from '../ActionCreators';
-import { Form, H1, PrimaryButton } from '../StyledComponents/index';
+import { Form, H1, PrimaryButton } from '../StyledComponents';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import * as mutations from '../graphql/mutations';
 
@@ -99,6 +99,11 @@ class NewPacient extends React.Component {
           <FormGroup>
             <label>
               Plan de salud: <Input value={this.state.planSalud} onChange={this.onChange('planSalud')} />
+            </label>
+          </FormGroup>
+          <FormGroup>
+            <label>
+              Numero de afiliado: <Input value={this.state.numeroAfiliado} onChange={this.onChange('numeroAfiliado')} />
             </label>
           </FormGroup>
           <FormGroup>

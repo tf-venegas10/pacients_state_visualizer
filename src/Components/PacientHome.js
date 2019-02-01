@@ -13,9 +13,9 @@ export default class PacientHome extends React.Component {
     return (
       <div>
         <NavBarPaciente />
-        <Route path="/paciente/:id/add" component={AddVisit} />
-        <Route path="/paciente/:id/historia" component={History} />
-        <PacientCard />
+        <Route path="/paciente/add" component={AddVisit} />
+        <Route path="/paciente/historia" component={History} />
+        <Route exact path="/paciente" component={PacientCard} />
       </div>
     );
   }
