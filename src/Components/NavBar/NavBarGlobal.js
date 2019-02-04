@@ -1,27 +1,80 @@
 import React from 'react';
-import { Navbar } from 'reactstrap';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import styled from 'styled-components';
-import Link from './Link';
+import { Link } from 'react-router-dom';
 
-export const NavBarGlobal = styled(Navbar)`
-  height: 7vh;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.2em;
-  background-color: #3e467f;
-  color: white;
-  border: solid 0.1em;
-  padding: 0.6em;
-  margin: 0 0 0.2em 0;
-`;
+//import Link from './Link';
+class GlobalNav extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = { open: false, dropdownOpen: false };
+    this.toggleNav = this.toggleNav.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
+  toggleNav = () => {
+    this.setState((prevState) => ({ open: !prevState.open }));
+  };
+  toggleDropdown = () => {
+    this.setState((prevState) => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  };
+  render() {
+    return (
+      <Navbar color="light" light expand="md">
+        <Link to="/" className="navbar-brand">
+          AliMente
+        </Link>
+        <NavbarToggler onClick={this.toggleNav} />
+        <Collapse isOpen={this.state.open} navbar>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <Link to="/" className="nav-link">
+                Buscar paciente
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="" className="nav-link">
+                Menu de hoy
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/paciente" className="nav-link">
+                Paciente:{' '}
+              </Link>
+            </NavItem>
+            <Dropdown nav inNavbar isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
+              <DropdownToggle nav caret>
+                Agregar
+              </DropdownToggle>
+              <DropdownMenu right>
+                <Link to="/nuevo/paciente" className="dropdown-item">
+                  Paciente
+                </Link>
+                <DropdownItem>Alimento</DropdownItem>
+                <DropdownItem>Preparación</DropdownItem>
+                <DropdownItem>Menu</DropdownItem>
+                <DropdownItem divider />
+              </DropdownMenu>
+            </Dropdown>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    );
+  }
+}
 
-const GlobalNav = (props) => (
-  <header className="App-header">
-    <NavBarGlobal>
-      <Link to="/">Buscar</Link>
-      <Link to="/nuevo/paciente">Nuevo paciente</Link>
-      <Link to="/paciente">Paciente: </Link>
-    </NavBarGlobal>
-  </header>
-);
-
-export default GlobalNav;
+const NavBarGlobal = styled(GlobalNav)``;
+export default NavBarGlobal;

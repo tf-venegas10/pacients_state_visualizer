@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
-import NewPacient from './Components/NewPacient';
+import NewPacient from './Components/Pacient/NewPacient';
 import PacientHome from './Components/PacientHome';
 import Search from './Components/Search';
 import { NavBarGlobal } from './Components/NavBar';

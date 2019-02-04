@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Form, H3, PrimaryButton } from '../StyledComponents/index';
 import { FormGroup, Input } from 'reactstrap';
 import styled from 'styled-components';
-import ForForms from './ForForms';
+import ForForms from './FormsHandler';
 
 const BigInput = styled(Input)`
   height: 25vh !important;
@@ -15,7 +14,6 @@ class AddVisit extends React.Component {
     return (
       <div>
         <H3>Agregar una visita del paciente {this.props.paciente.nombre}</H3>
-
         <Form>
           <FormGroup>
             <label>
@@ -29,13 +27,4 @@ class AddVisit extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-export default ForForms(
-  connect(
-    mapStateToProps,
-    null
-  )(AddVisit)
-);
+export default ForForms(AddVisit);
